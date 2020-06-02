@@ -22,6 +22,8 @@ void BackgroundMusic::play()
         case LASTTRIES:
             _fileMusic = "last tries.wav";
             break;
+        case POP:
+            _fileMusic = "pop.wav";
     }
 
     if (!music.openFromFile(_fileMusic))
