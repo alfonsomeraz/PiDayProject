@@ -1,54 +1,67 @@
-//
+// Modified by Alyssa Ng on 6/2/20.
 // Created by Venus Nguyen on 5/31/20.
 //
 
-#include "BackgroundAnimation.h"
+#include "Animate.h"
 #include <iostream>
 
-BackgroundAnimation::BackgroundAnimation()
+Animate::Animate()
 {}
 
-BackgroundAnimation::BackgroundAnimation(sf::Texture _texture)
+Animate::Animate(std::string spriteName, float left, float top, int width, int height)
 {
-    texture = _texture;
+    if (!texture.loadFromFile(spriteName))
+        exit(1);
+    setTextureRect(left, top, width, height);
     sprite.setTexture(texture);
-    sprite.setTextureRect(sourceSprite);
+    sprite.setTextureRect(textureRect);
+}
+// instead of sf::Texture texture -> string::
+
+void Animate::setTextureRect(float left, float top, int width, int height) //sets position + size of rectangle
+{
+    textureRect.left = left;
+    textureRect.top = top;
+    textureRect.width = width;
+    textureRect.height = height;
 }
 
-void BackgroundAnimation::setSprite(int left, int top, int width, int height)
+void Animate::setTime(float time)
 {
-    sourceSprite.left = left;
-    sourceSprite.top = top;
-    sourceSprite.width = width;
-    sourceSprite.height = height;
+    this->time = time;
 }
 
-void BackgroundAnimation::setTime(float time)
+void Animate::animation()
 {
-    _time = time;
-}
-
-void BackgroundAnimation::animation()
-{
-    if (clock.getElapsedTime().asMilliseconds() > _time)
+    if (clock.getElapsedTime().asMilliseconds() > time)
     {
-        if (sourceSprite.left >= (texture.getSize().x - sourceSprite.width))
-            sourceSprite.left = 0;
+        if (textureRect.left >= (texture.getSize().x - textureRect.width))
+            textureRect.left = 0;
         else
-            sourceSprite.left += sourceSprite.width;
+            textureRect.left += textureRect.width;
 
-        sprite.setTextureRect(sourceSprite);
+        sprite.setTextureRect(textureRect);
         clock.restart();
     }
 }
 
-void BackgroundAnimation::setScale(sf::Vector2f size)
+void Animate::setScale(sf::Vector2f factor)
 {
-    sprite.setScale(size);
+    sprite.setScale(factor);
 }
 
-void BackgroundAnimation::draw(sf::RenderTarget &window, sf::RenderStates state) const
+void Animate::draw(sf::RenderTarget &window, sf::RenderStates state) const
 {
     window.draw(sprite);
 }
 
+void Animate::move(float offsetX, float offsetY)
+{
+    sf::Vector2f pos = sprite.getPosition();
+    sprite.setPosition(pos.x + offsetX, pos.y + offsetY);
+}
+
+void Animate::rotate(float angle)
+{
+    sprite.setRotation(sprite.getRotation() + angle);
+}
