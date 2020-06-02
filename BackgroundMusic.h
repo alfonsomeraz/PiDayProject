@@ -17,7 +17,8 @@ public:
         BACKGROUND,
         WIN,
         LOSE,
-        LASTTRIES
+        LASTTRIES,
+        POP
     };
     states state = BACKGROUND;
 
