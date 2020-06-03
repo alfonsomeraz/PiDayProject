@@ -39,7 +39,7 @@ void Animation::setTime(float time)
     _time = time;
 }
 
-void Animation::animation()
+void Animation::animate()
 {
     if (clock.getElapsedTime().asMilliseconds() > _time)
     {
@@ -56,6 +56,11 @@ void Animation::animation()
 void Animation::setScale(sf::Vector2f size)
 {
     sprite.setScale(size);
+}
+
+void Animation::rotate(float angle)
+{
+    sprite.rotate(angle);
 }
 
 void Animation::draw(sf::RenderTarget &window, sf::RenderStates state) const
