@@ -11,20 +11,20 @@
 class WordGraphic : public sf::Drawable{
 public:
     WordGraphic();
-    WordGraphic(std::string _word);
-    void setWord(std::string _word);
-    virtual void draw(sf::RenderTarget &window, sf::RenderStates state) const;
+    WordGraphic(std::string word, float x, float y, int size);
+    void setWord(std::string word);
     void revealLetter(char letter);
     void addEvent(sf::RenderWindow &window, sf::Event event);
     void setSize(int size);
     void setPosition(sf::Vector2f pos);
     void setPosition(float x, float y);
+    virtual void draw(sf::RenderTarget &window, sf::RenderStates state) const;
 
 private:
-    Word word;
+    Word _word;
     sf::Text text;
     sf::Font font;
-    int _size;
+    int _size = 30;
     sf::Vector2f _pos;
 };
 
