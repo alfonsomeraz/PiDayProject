@@ -16,7 +16,8 @@ public:
     void setTextureRect(int left, int top, int width, int height);
     void setScale(sf::Vector2f size);
     void setTime(float time);
-    void animation();
+    void animate();
+    void rotate(float angle);
     virtual void draw(sf::RenderTarget &window, sf::RenderStates state) const;
 
 private:
