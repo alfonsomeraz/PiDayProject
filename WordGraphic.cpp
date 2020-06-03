@@ -10,51 +10,51 @@ WordGraphic::WordGraphic()
 {
     if (!font.loadFromFile("OpenSans-Regular.ttf"))
         exit(1);
-    text.setCharacterSize(_size);
     text.setFillColor(sf::Color::Black);
     text.setLetterSpacing(5);
-    text.setPosition(_pos);
     text.setFont(font);
 }
 
-WordGraphic::WordGraphic(std::string _word) : word(_word)
+WordGraphic::WordGraphic(std::string word, float x, float y, int size) : _word(word)
 {
     if (!font.loadFromFile("OpenSans-Regular.ttf"))
         exit(1);
-    text.setCharacterSize(_size);
+    setSize(size);
     text.setFillColor(sf::Color::Black);
     text.setLetterSpacing(5);
-    text.setPosition(_pos);
+    setPosition(x, y);
     text.setFont(font);
-    text.setString(word.getWord());
+    text.setString(_word.getWord());
 }
 
 void WordGraphic::setSize(int size)
 {
     _size = size;
+    text.setCharacterSize(_size);
 }
+
 void WordGraphic::setPosition(sf::Vector2f pos)
 {
     _pos = pos;
+    text.setPosition(_pos);
 }
 
 void WordGraphic::setPosition(float x, float y)
 {
     _pos.x = x;
     _pos.y = y;
+    text.setPosition(_pos);
 }
 
-void WordGraphic::setWord(std::string _word)
+void WordGraphic::setWord(std::string word)
 {
-    word = _word;
+    _word = word;
     if (!font.loadFromFile("OpenSans-Regular.ttf"))
         exit(1);
-    text.setCharacterSize(_size);
     text.setFillColor(sf::Color::Black);
     text.setLetterSpacing(5);
-    text.setPosition(_pos);
     text.setFont(font);
-    text.setString(word.getWord());
+    text.setString(_word.getWord());
 }
 
 void WordGraphic::draw(sf::RenderTarget &window, sf::RenderStates state) const
@@ -64,16 +64,19 @@ void WordGraphic::draw(sf::RenderTarget &window, sf::RenderStates state) const
 
 void WordGraphic::revealLetter(char letter)
 {
-    word.revealLetter(letter);
-    text.setString(word.getWord());
+    _word.revealLetter(letter);
+    text.setString(_word.getWord());
 }
 
 void WordGraphic::addEvent(sf::RenderWindow &window, sf::Event event)
 {
-    if (isalpha(event.key.code))
+    if (event.KeyPressed == sf::Event::KeyPressed)
     {
-        char c = event.key.code;
-        revealLetter(c);
+        if (isalpha(event.key.code))
+        {
+            char c = event.key.code;
+            revealLetter(c);
+        }
     }
 }
 
