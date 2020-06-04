@@ -39,6 +39,11 @@ void Animation::setTime(float time)
     _time = time;
 }
 
+void Animation::setPosition(float x, float y)
+{
+    sprite.setPosition(x, y);
+}
+
 void Animation::animate()
 {
     if (clock.getElapsedTime().asMilliseconds() > _time)
