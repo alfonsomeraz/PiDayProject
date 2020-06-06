@@ -16,21 +16,25 @@ Animation::Animation(std::string fileName) : _fileName(fileName)
     sprite.setTextureRect(sourceSprite);
 }
 
-Animation::Animation(std::string fileName, int left, int top, int width, int height) : _fileName(fileName), _left(left)
+Animation::Animation(std::string fileName, float left, float top, int row, int column) : _fileName(fileName), _left(left)
 {
     if (!texture.loadFromFile(_fileName))
         exit(1);
-    setTextureRect(left, top, width, height);
+    _width = texture.getSize().x / column;
+    _height = texture.getSize().y / row;
+
     sprite.setTexture(texture);
-    sprite.setTextureRect(sourceSprite);
+    setTextureRect(left, top, _width, _height);
+    _left = left;
 }
 
-void Animation::setTextureRect(int left, int top, int width, int height)
+void Animation::setTextureRect(float left, float top, float width, float height)
 {
     sourceSprite.left = left;
     sourceSprite.top = top;
     sourceSprite.width = width;
     sourceSprite.height = height;
+    sprite.setTextureRect(sourceSprite);
     _left = left;
 }
 
@@ -66,6 +70,23 @@ void Animation::setScale(sf::Vector2f size)
 void Animation::rotate(float angle)
 {
     sprite.rotate(angle);
+}
+
+void Animation::move(sf::Vector2f offset)
+{
+    sprite.move(offset);
+}
+
+void Animation::goToRow(int row)
+{
+    sourceSprite.top = _height * (row - 1);
+    sprite.setTextureRect(sourceSprite);
+}
+
+void Animation::setColumn(int column)
+{
+    sourceSprite.left = _width * (column - 1);
+    sprite.setTextureRect(sourceSprite);
 }
 
 void Animation::draw(sf::RenderTarget &window, sf::RenderStates state) const
