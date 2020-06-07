@@ -1,3 +1,4 @@
+// Edited by Alyssa Ng on 6/7/20.
 //
 // Created by Venus Nguyen on 5/31/20.
 //
@@ -8,24 +9,23 @@
 Animation::Animation()
 {}
 
-Animation::Animation(std::string fileName) : _fileName(fileName)
+Animation::Animation(std::string fileName) : fileName(fileName)
 {
-    if (!texture.loadFromFile(_fileName))
+    if (!texture.loadFromFile(fileName))
         exit(1);
     sprite.setTexture(texture);
     sprite.setTextureRect(sourceSprite);
 }
 
-Animation::Animation(std::string fileName, float left, float top, int row, int column) : _fileName(fileName), _left(left)
+Animation::Animation(std::string fileName, float left, float top, int row, int column)
+    : fileName(fileName), left(left)
 {
-    if (!texture.loadFromFile(_fileName))
+    if (!texture.loadFromFile(fileName))
         exit(1);
-    _width = texture.getSize().x / column;
-    _height = texture.getSize().y / row;
-
+    width = texture.getSize().x / column;
+    height = texture.getSize().y / row;
     sprite.setTexture(texture);
-    setTextureRect(left, top, _width, _height);
-    _left = left;
+    setTextureRect(left, top, width, height);
 }
 
 void Animation::setTextureRect(float left, float top, float width, float height)
@@ -35,12 +35,11 @@ void Animation::setTextureRect(float left, float top, float width, float height)
     sourceSprite.width = width;
     sourceSprite.height = height;
     sprite.setTextureRect(sourceSprite);
-    _left = left;
 }
 
 void Animation::setTime(float time)
 {
-    _time = time;
+    this->time = time;
 }
 
 void Animation::setPosition(float x, float y)
@@ -50,10 +49,10 @@ void Animation::setPosition(float x, float y)
 
 void Animation::animate()
 {
-    if (clock.getElapsedTime().asMilliseconds() > _time)
+    if (clock.getElapsedTime().asMilliseconds() > time)
     {
         if (sourceSprite.left >= (texture.getSize().x - sourceSprite.width))
-            sourceSprite.left = _left;
+            sourceSprite.left = left;
         else
             sourceSprite.left += sourceSprite.width;
 
@@ -62,30 +61,33 @@ void Animation::animate()
     }
 }
 
-void Animation::setScale(sf::Vector2f size)
+void Animation::scale(float factorX, float factorY)
 {
-    sprite.setScale(size);
+    sf::Vector2f scale = sprite.getScale();
+    sprite.setScale(factorX, factorY);
 }
 
-void Animation::rotate(float angle)
+void Animation::rotate(float rotateBy, float targetAngle)
 {
-    sprite.rotate(angle);
+    if (sprite.getRotation() < targetAngle)
+        sprite.rotate(rotateBy);
 }
 
-void Animation::move(sf::Vector2f offset)
+void Animation::move(sf::Vector2f offset, sf::Vector2f targetPosition)
 {
-    sprite.move(offset);
+    if (sprite.getPosition().x < targetPosition.x && sprite.getPosition().y < targetPosition.y)
+            sprite.move(offset);
 }
 
 void Animation::goToRow(int row)
 {
-    sourceSprite.top = _height * (row - 1);
+    sourceSprite.top = height * (row - 1);
     sprite.setTextureRect(sourceSprite);
 }
 
 void Animation::setColumn(int column)
 {
-    sourceSprite.left = _width * (column - 1);
+    sourceSprite.left = width * (column - 1);
     sprite.setTextureRect(sourceSprite);
 }
 
@@ -93,4 +95,3 @@ void Animation::draw(sf::RenderTarget &window, sf::RenderStates state) const
 {
     window.draw(sprite);
 }
-
