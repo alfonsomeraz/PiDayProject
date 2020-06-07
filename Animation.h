@@ -17,6 +17,7 @@ public:
     void setScale(sf::Vector2f size);
     void setTime(float time);
     void setPosition(float x, float y);
+    void setOrigin(float x, float y);
     void animate();
     void rotate(float angle);
     void move(sf::Vector2f offset);
