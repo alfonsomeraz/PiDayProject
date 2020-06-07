@@ -67,6 +67,11 @@ void Animation::scale(float factorX, float factorY)
     sprite.setScale(factorX, factorY);
 }
 
+void Animation::setRotation(float angle) 
+{
+    sprite.setRotation(angle);
+}
+
 void Animation::rotate(float rotateBy, float targetAngle)
 {
     if (sprite.getRotation() < targetAngle)
