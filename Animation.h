@@ -19,6 +19,7 @@ public:
     void setTime(float time);
     void setPosition(float x, float y);
     void animate();
+    void setRotation(float angle);
     void rotate(float rotateBy, float targetAngle);
     void move(sf::Vector2f offset, sf::Vector2f targetPosition);
     void goToRow(int row);
