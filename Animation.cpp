@@ -78,10 +78,51 @@ void Animation::rotate(float rotateBy, float targetAngle) // Function WILL infin
         sprite.rotate(rotateBy);
 }
 
+void Animation::rotateSwing(float rotateBy, float targetAngle)
+{
+    if (sprite.getRotation() < targetAngle)
+        sprite.rotate(rotateBy);
+    /*
+    if (clock.getElapsedTime().asSeconds() > .25f)
+    {
+        if (sprite.getRotation() < targetAngle)
+            sprite.rotate(5);
+
+        clock.restart();
+    }
+     */
+
+}
+
 void Animation::move(sf::Vector2f offset, sf::Vector2f targetPosition)
 {
     if (sprite.getPosition().x < targetPosition.x && sprite.getPosition().y < targetPosition.y)
             sprite.move(offset);
+}
+
+void Animation::moveByGravity(sf::Vector2f offset, sf::Vector2f targetPosition)
+{
+    if (sprite.getPosition().x < targetPosition.x && sprite.getPosition().y < targetPosition.y)
+        //sprite.move(offset);
+        //sf::Vector2f spritePos = sprite.getPosition();
+        sprite.setPosition(sprite.getPosition().x + .1, (sprite.getPosition().x + .1) / 1920.0 * (sprite.getPosition().x + .1) / 1920.0 * 1080.0);
+}
+
+void Animation::moveVertically(sf::Vector2f offset, sf::Vector2f targetPosition)
+{
+    if (sprite.getPosition().x < targetPosition.x && sprite.getPosition().y < targetPosition.y)
+        //sprite.move(offset);
+        //sf::Vector2f spritePos = sprite.getPosition();
+        sprite.setPosition(sprite.getPosition().x , (sprite.getPosition().y + 1) );
+}
+
+
+void Animation::moveHoriz(sf::Vector2f offset, sf::Vector2f targetPosition)
+{
+    if (sprite.getPosition().x < targetPosition.x && sprite.getPosition().y < targetPosition.y)
+        //sprite.move(offset);
+        //sf::Vector2f spritePos = sprite.getPosition();
+        sprite.setPosition(sprite.getPosition().x + .1 , (sprite.getPosition().y ) );
 }
 
 void Animation::goToRow(int row)
