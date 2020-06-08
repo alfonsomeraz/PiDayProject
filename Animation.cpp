@@ -72,9 +72,9 @@ void Animation::setRotation(float angle)
     sprite.setRotation(angle);
 }
 
-void Animation::rotate(float rotateBy, float targetAngle)
+void Animation::rotate(float rotateBy, float targetAngle) // Function WILL infinite loop if if targetAngle % rotateBy != 0
 {
-    if (sprite.getRotation() < targetAngle)
+    if (sprite.getRotation() != targetAngle)
         sprite.rotate(rotateBy);
 }
 
