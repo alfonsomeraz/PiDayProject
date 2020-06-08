@@ -57,6 +57,11 @@ void WordGraphic::setWord(std::string word)
     text.setString(_word.getWord());
 }
 
+bool WordGraphic::isReveal()
+{
+    return _word.isReveal();
+}
+
 void WordGraphic::draw(sf::RenderTarget &window, sf::RenderStates state) const
 {
     window.draw(text);
