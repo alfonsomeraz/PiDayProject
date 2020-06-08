@@ -14,11 +14,12 @@ public:
     WordGraphic(std::string word, float x, float y, int size);
     void setWord(std::string word);
     void revealLetter(char letter);
-    void addEvent(sf::RenderWindow &window, sf::Event event);
     void setSize(int size);
     void setPosition(sf::Vector2f pos);
     void setPosition(float x, float y);
+    bool isReveal();
     virtual void draw(sf::RenderTarget &window, sf::RenderStates state) const;
+    void addEvent(sf::RenderWindow &window, sf::Event event);
 
 private:
     Word _word;
