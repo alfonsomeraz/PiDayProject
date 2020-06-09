@@ -50,6 +50,11 @@ void Animation::setPosition(float x, float y)
     sprite.setPosition(x, y);
 }
 
+void Animation::setOrigin(float x, float y)
+{
+    sprite.setOrigin(x, y);
+}
+
 void Animation::animate()
 {
     if (clock.getElapsedTime().asMilliseconds() > time)

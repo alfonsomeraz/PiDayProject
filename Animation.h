@@ -21,6 +21,7 @@ public:
     void scale(float factorX, float factorY);
     void setTime(float time);
     void setPosition(float x, float y);
+    void setOrigin(float x, float y);
     void animate();
     void setRotation(float angle);
     void rotate(float rotateBy, float targetAngle);
