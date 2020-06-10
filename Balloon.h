@@ -1,38 +1,44 @@
 //
-// Created by Dave Smith on 6/4/20.
+// Created by Venus Nguyen on 6/8/20.
 //
 
-#ifndef SFML_CLICKABLE_BALLOON_H
-#define SFML_CLICKABLE_BALLOON_H
+#ifndef FINALPROJECT_BALLOONS_H
+#define FINALPROJECT_BALLOONS_H
+#include "Animation.h"
+#include "WordGraphic.h"
 #include <SFML/Graphics.hpp>
+#include <string>
 
-class Balloon : public sf::Drawable {
 
-
+class Balloons : public sf::Drawable
+{
 public:
+    Balloons();
+    Balloons(std::string fileName);
+    Balloons(std::string fileName, float left, float top, int row, int column);
+    void setTextureRect(float left, float top, int row, int column);
+    void setScale(float x, float y);
+    void setPosition(float x, float y);
+    void setOrigin(float x, float y);
+    void setColumn(int column);
+    void rotate(float angle);
     void animate();
-    Balloon();
-    void draw(sf::RenderTarget& window, sf::RenderStates state) const;
-    enum states{
-        SHOWING,
-        POPPED,
-        HIDDEN
+    void draw(sf::RenderTarget &window, sf::RenderStates state) const;
+    void addEvents(sf::RenderWindow& window, sf::Event event);
+    enum states
+    {
+        SHOW,
+        HIDE,
+        POP
     };
-    states getState() const;
     void changeState(states state);
+    states getState() const;
 
 private:
-    sf::Sprite sprite;
-    sf::Texture texture;
-    sf::IntRect textureRect;
-
-    sf::Sprite spriteStill;
-    sf::Texture textureStill;
-    sf::IntRect textureRectStill;
-
-    sf::Clock clock;
-    states state = SHOWING;
+    Animation balloon, balloonStill;
+    WordGraphic wordGraphic;
+    states state = SHOW;
 };
 
 
-#endif //SFML_CLICKABLE_BALLOON_H
+#endif //FINALPROJECT_BALLOONS_H
