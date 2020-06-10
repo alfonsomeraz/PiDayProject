@@ -17,14 +17,9 @@ WordGraphic::WordGraphic()
 
 WordGraphic::WordGraphic(std::string word, float x, float y, int size) : _word(word)
 {
-    if (!font.loadFromFile("OpenSans-Regular.ttf"))
-        exit(1);
+    setWord(word);
     setSize(size);
-    text.setFillColor(sf::Color::Black);
-    text.setLetterSpacing(5);
     setPosition(x, y);
-    text.setFont(font);
-    text.setString(_word.getWord());
 }
 
 void WordGraphic::setSize(int size)
@@ -57,9 +52,14 @@ void WordGraphic::setWord(std::string word)
     text.setString(_word.getWord());
 }
 
-bool WordGraphic::isReveal()
+bool WordGraphic::isReveal() const
 {
     return _word.isReveal();
+}
+
+bool WordGraphic::checkLetter(char letter) const
+{
+    return _word.checkLetter(letter);
 }
 
 void WordGraphic::draw(sf::RenderTarget &window, sf::RenderStates state) const
@@ -67,21 +67,35 @@ void WordGraphic::draw(sf::RenderTarget &window, sf::RenderStates state) const
     window.draw(text);
 }
 
-void WordGraphic::revealLetter(char letter)
+bool WordGraphic::revealLetter(char letter)
 {
-    _word.revealLetter(letter);
+    bool b = _word.revealLetter(letter);
     text.setString(_word.getWord());
+    return b;
 }
 
 void WordGraphic::addEvent(sf::RenderWindow &window, sf::Event event)
 {
-    if (event.KeyPressed == sf::Event::KeyPressed)
+    if (event.type == sf::Event::TextEntered)
     {
         if (isalpha(event.key.code))
         {
             char c = event.key.code;
-            revealLetter(c);
+            if(!revealLetter(c))
+            {
+                state = BAD_LETTER;
+            }
+            else state = GOOD_LETTER;
         }
     }
+}
+
+void WordGraphic::changeState(states state)
+{
+    this->state = state;
+}
+WordGraphic::states WordGraphic::getState()
+{
+    return state;
 }
 
