@@ -1,67 +1,87 @@
 //
-// Created by Dave Smith on 6/4/20.
+// Created by Venus Nguyen on 6/8/20.
 //
 
-#include "Balloon.h"
+#include "Balloons.h"
 
-void Balloon::animate()
+Balloons::Balloons()
+{}
+
+Balloons::Balloons(std::string fileName)
+        : balloon(fileName), balloonStill(fileName)
+{}
+
+Balloons::Balloons(std::string fileName, float left, float top, int row, int column)
+        : balloon(fileName), balloonStill(fileName)
 {
-    if(clock.getElapsedTime().asMilliseconds() > 100.f) {
-//        if (textureRect.left >= 900)
-//            textureRect.left = 0;
-//        else {
-            textureRect.left += textureRect.width;
-            sprite.setTextureRect(textureRect);
-            clock.restart();
-        //}
-    }
-    if(textureRect.left > texture.getSize().x - textureRect.width)
-        changeState(HIDDEN);
-
-
+    setTextureRect(left, top, row, column);
 }
 
-Balloon::Balloon()
+void Balloons::setTextureRect(float left, float top, int row, int column)
 {
+    balloon.setTextureRect(left, top, row, column);
+    balloonStill.setTextureRect(left, top, row, column);
+}
 
-    if(texture.loadFromFile("balloons2.png"))
+void Balloons::setScale(float x, float y)
+{
+    balloon.setScale({x, y});
+    balloonStill.setScale({x, y});
+}
+
+void Balloons::setPosition(float x, float y)
+{
+    balloon.setPosition(x, y);
+    balloonStill.setPosition(x, y);
+}
+
+void Balloons::setOrigin(float x, float y)
+{
+    balloon.setOrigin(x, y);
+    balloonStill.setOrigin(x, y);
+}
+
+void Balloons::setColumn(int column)
+{
+    balloon.setColumn(column);
+    balloonStill.setColumn(column);
+}
+
+void Balloons::rotate(float angle)
+{
+    balloon.rotate(angle);
+    balloonStill.rotate(angle);
+}
+
+void Balloons::draw(sf::RenderTarget &window, sf::RenderStates state) const
+{
+    if (getState() == SHOW)
+        window.draw(balloonStill);
+    else if (getState() == POP)
+        window.draw(balloon);
+}
+
+void Balloons::animate()
+{
+    balloon.animateLoop();
+    if (balloon.left > balloon.getTextureSize().x - balloon.width)
     {
-        sprite.setTexture(texture);
-        textureRect.left = 0;
-        textureRect.top = 0;
-        textureRect.width = texture.getSize().x/11.f;
-        textureRect.height = texture.getSize().y/4.f;
-        sprite.setTextureRect(textureRect);
-
-    }
-    if(textureStill.loadFromFile("balloons2.png"))
-    {
-        spriteStill.setTexture(texture);
-        textureRectStill.left = 0;
-        textureRectStill.top = 0;
-        textureRectStill.width = textureStill.getSize().x/11.f;
-        textureRectStill.height = textureStill.getSize().y/4.f;
-        spriteStill.setTextureRect(textureRectStill);
-
-
+        changeState(HIDE);
     }
 }
 
-void Balloon::draw(sf::RenderTarget& window, sf::RenderStates state) const
+void Balloons::changeState(states state)
 {
-    if(getState() == SHOWING)
-        window.draw(spriteStill);
-    else if(getState() == POPPED)
-        window.draw(sprite);
-
+    this -> state = state;
 }
 
-Balloon::states Balloon::getState() const
+Balloons::states Balloons::getState() const
 {
     return state;
 }
 
-void Balloon::changeState(states state)
+void Balloons::addEvents(sf::RenderWindow& window, sf::Event event)
 {
-    this->state = state;
+    if(state == POP && event.type)
+        animate();
 }
