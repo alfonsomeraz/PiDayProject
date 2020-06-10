@@ -13,20 +13,25 @@ public:
     WordGraphic();
     WordGraphic(std::string word, float x, float y, int size);
     void setWord(std::string word);
-    void revealLetter(char letter);
+    bool revealLetter(char letter);
     void setSize(int size);
     void setPosition(sf::Vector2f pos);
     void setPosition(float x, float y);
-    bool isReveal();
+    bool isReveal() const;
+    bool checkLetter(char letter) const;
     virtual void draw(sf::RenderTarget &window, sf::RenderStates state) const;
     void addEvent(sf::RenderWindow &window, sf::Event event);
-
+    enum states { BAD_LETTER, GOOD_LETTER};
+    void changeState(states state);
+    states getState();
 private:
+
     Word _word;
     sf::Text text;
     sf::Font font;
     int _size = 30;
     sf::Vector2f _pos;
+    states state = GOOD_LETTER;
 };
 
 
