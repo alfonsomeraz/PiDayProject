@@ -62,8 +62,11 @@ void Button::centerText()
 
 void Button::draw(sf::RenderTarget &window, sf::RenderStates state) const
 {
-    window.draw(button);
-    window.draw(_text);
+    if (this -> state == showButton)
+    {
+        window.draw(button);
+        window.draw(_text);
+    }
 }
 
 void Button::addEvent(sf::RenderWindow &window, sf::Event event)
@@ -73,7 +76,7 @@ void Button::addEvent(sf::RenderWindow &window, sf::Event event)
         sf::Vector2f mPos = (sf::Vector2f) sf::Mouse::getPosition(window);
         sf::FloatRect bPos = button.getGlobalBounds();
 
-        if (bPos.contains(mPos))
+        if (bPos.contains(mPos) && state != hideButton)
         {
             changeState(buttonPressed);
         }
@@ -93,4 +96,9 @@ bool Button::isButtonHidden() const
 void Button::changeState(states state)
 {
     this->state = state;
+}
+
+Button::states Button::getState()
+{
+    return state;
 }
