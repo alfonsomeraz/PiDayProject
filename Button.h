@@ -30,6 +30,7 @@ public:
     bool isButtonPressed() const;
     bool isButtonHidden() const;
     void changeState(states state);
+    states getState();
 
 private:
     int characterSize = 30;
@@ -38,7 +39,7 @@ private:
     sf::RectangleShape button;
     sf::Font font;
     sf::Text _text;
-    states state = showButton;
+    states state = hideButton;
 };
 
 
