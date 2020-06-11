@@ -29,6 +29,7 @@ private:
     Button button;
     Balloons balloon1, balloon2, balloon3, balloon4, balloon5;
     Animation littleGirl;
+    Animation magicCarpet;
     Animation water;
     std::vector<Balloons> balloons;
     int vectorIndex = 4;
