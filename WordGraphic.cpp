@@ -85,7 +85,6 @@ void WordGraphic::addEvent(sf::RenderWindow &window, sf::Event event)
             {
                 state = BAD_LETTER;
             }
-            else state = GOOD_LETTER;
         }
     }
 }
