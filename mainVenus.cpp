@@ -1,32 +1,19 @@
-#include <iostream>
 #include <SFML/Graphics.hpp>
-#include "WordGraphic.h"
-#include "Animation.h"
-#include "WordsFile.h"
 #include "BackgroundMusic.h"
-#include "Button.h"
+#include "GameFunction.h"
 
 int main()
 {
     sf::VideoMode video(1920, 1200, 32);
     sf::RenderWindow window(video, "Game");
 
-
     BackgroundMusic music;
     music.play();
 
-    WordsFile file("words.txt");
-    WordGraphic word;
-    word.setPosition(350, 475);
-    word.setSize(125);
-    word.setWord(file.getNextWord());
-
-    Animation water("wave.png", 0, 0, 1, 2);
-    water.setScale({7.5, 5.3});
-    water.setTime(1000.f);
+    GameFunction button("words.txt");
 
 
-
+    window.setKeyRepeatEnabled(false);
 
     while (window.isOpen())
     {
@@ -38,15 +25,12 @@ int main()
             if (event.type == sf::Event::Closed)
                 window.close();
         }
-
-        water.animate();
-        word.addEvent(window, event);
+        button.addEvent(window, event);
 
 
 
         window.clear();
-        window.draw(water);
-        window.draw(word);
+        window.draw(button);
         window.display();
     }
 
