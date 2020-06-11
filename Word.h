@@ -12,8 +12,9 @@ public:
     Word();
     Word(std::string _word);
     std::string getWord();
-    bool isReveal();
-    void revealLetter(char letter);
+    bool checkLetter(char letter) const;
+    bool isReveal() const;
+    bool revealLetter(char letter);
     void hideWord();
 
 private:
