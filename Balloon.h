@@ -1,46 +1,42 @@
 //
-// Created by Venus Nguyen on 6/8/20.
+// Created by Venus Nguyen on 6/6/20.
 //
 
-#ifndef FINALPROJECT_BALLOONS_H
-#define FINALPROJECT_BALLOONS_H
+#ifndef FINALPROJECT_GAMEFUNCTION_H
+#define FINALPROJECT_GAMEFUNCTION_H
 #include "Animation.h"
+#include "Balloons.h"
+#include "Button.h"
 #include "WordGraphic.h"
+#include "WordsFile.h"
 #include <SFML/Graphics.hpp>
 #include <string>
+#include <vector>
 
 
-class Balloons : public sf::Drawable
+class GameFunction : public sf::Drawable
 {
 public:
-    Balloons();
-    Balloons(std::string fileName);
-    Balloons(std::string fileName, float left, float top, int row, int column);
-    void setTextureRect(float left, float top, int row, int column);
-    void setScale(float x, float y);
-    void setPosition(float x, float y);
-    void setOrigin(float x, float y);
-    void setColumn(int column);
-    void rotate(float angle);
-    sf::IntRect& getTextureRect();
-
-    void animate();
+    GameFunction();
+    GameFunction(std::string fileName);
     void draw(sf::RenderTarget &window, sf::RenderStates state) const;
-    void addEvents(sf::RenderWindow& window, sf::Event event);
-    enum states
-    {
-        SHOW,
-        HIDE,
-        POP
-    };
-    void changeState(states state);
-    states getState() const;
+    void addEvent(sf::RenderWindow &window, sf::Event event);
+
 
 private:
-    Animation balloon, balloonStill;
+    WordsFile wordsFile;
     WordGraphic wordGraphic;
-    states state = SHOW;
+    Button button;
+    Balloons balloon1, balloon2, balloon3, balloon4, balloon5;
+    Animation littleGirl;
+    Animation water;
+    Animation magicCarpet;
+    std::vector<Balloons> balloons;
+    int vectorIndex = 4;
+    void initBalloons();
+    void winSequence();
+    sf::Vector2f littleGirlInitPos = {1070, 300}; //should be private member of its own class, but don't have enough time to make change rn
 };
 
 
-#endif //FINALPROJECT_BALLOONS_H
+#endif //FINALPROJECT_GAMEFUNCTION_H
