@@ -52,6 +52,7 @@ GameFunction::GameFunction(std::string fileName) : wordsFile(fileName),
     initBalloons();
 
     littleGirl.setTime(250.f);
+    littleGirl.setPosition(littleGirlInitPos.x, littleGirlInitPos.y);
 
     magicCarpet.setScale({4,4});
     magicCarpet.setTime(250.f);
@@ -137,6 +138,7 @@ void GameFunction::addEvent(sf::RenderWindow &window, sf::Event event)
         initBalloons();
         wordGraphic.setWord(wordsFile.getNextWord());
         button.changeState(Button::hideButton);
+        //set position of little girl to original position
     }
 }
 
