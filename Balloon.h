@@ -22,6 +22,8 @@ public:
     void setOrigin(float x, float y);
     void setColumn(int column);
     void rotate(float angle);
+    sf::IntRect& getTextureRect();
+
     void animate();
     void draw(sf::RenderTarget &window, sf::RenderStates state) const;
     void addEvents(sf::RenderWindow& window, sf::Event event);
