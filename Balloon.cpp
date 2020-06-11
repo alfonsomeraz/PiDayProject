@@ -53,6 +53,11 @@ void Balloons::rotate(float angle)
     balloonStill.rotate(angle);
 }
 
+sf::IntRect& Balloons::getTextureRect()
+{
+    return balloon.getTextureRect();
+}
+
 void Balloons::draw(sf::RenderTarget &window, sf::RenderStates state) const
 {
     if (getState() == SHOW)
@@ -64,7 +69,7 @@ void Balloons::draw(sf::RenderTarget &window, sf::RenderStates state) const
 void Balloons::animate()
 {
     balloon.animateLoop();
-    if (balloon.left > balloon.getTextureSize().x - balloon.width)
+    if (balloon.getTextureRect().left >= balloon.getTextureSize().x - balloon.width)
     {
         changeState(HIDE);
     }
